@@ -74,10 +74,10 @@ function writeBet() {
       if (listPerson.length > 0){
             for (let index in listPerson) {
                   tbodyTable.innerHTML += `<tr><td style="text-align: center;">${listPerson[index].name}</td>
-                  <td>${listPerson[index].amount}</td>
                   <td>${listPerson[index].choose}</td>
+                  <td>${listPerson[index].amount}</td>
                   </tr>`;
-                  sum += listPerson[index].amount;
+                  sum += +listPerson[index].amount;
             }
             tfootTable.innerHTML += `<tr><td colspan="2">TỔNG</td>
             <td>${sum}</td>
