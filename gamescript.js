@@ -35,6 +35,7 @@ for (let i = 0; i < bettingTableImages.length; i++) {
 }
 
 function StartRollingDices() {
+      let btn = document.getElementById("btn");
       let listRandom = new Array;
       for (let i = 0; i < 3; i++) {
             listRandom[i] = Math.floor(Math.random() * 6); 
@@ -48,10 +49,8 @@ function StartRollingDices() {
       }
       
       let intervalHandle = setInterval(increaseOpacity,20);
-
+      btn.innerText = "Xóa";
       setTimeout(() => {clearInterval(intervalHandle)}, 3000);
-      listPerson = [];
-      writeBet();
 }
 
 function increaseOpacity() {
@@ -61,42 +60,51 @@ function increaseOpacity() {
       }
 }
 
-function name(params) {
-      
-}
 
 function writeBet() {
+
       let tbodyTable = document.getElementById("betting-list").children[0].children[1];
       let tfootTable = document.getElementById("betting-list").children[0].children[2];
       tbodyTable.innerHTML = "";
-      tfootTable.innerHTML = "";
-      let sum = 0;
-      if (listPerson.length > 0){
-            for (let index in listPerson) {
-                  tbodyTable.innerHTML += `<tr><td style="text-align: center;">${listPerson[index].name}</td>
-                  <td>${listPerson[index].choose}</td>
-                  <td>${listPerson[index].amount}</td>
+            tfootTable.innerHTML = "";
+            let sum = 0;
+            if (listPerson.length > 0){
+                  for (let index in listPerson) {
+                        tbodyTable.innerHTML += `<tr><td style="text-align: center;">${listPerson[index].name}</td>
+                        <td>${listPerson[index].choose}</td>
+                        <td>${listPerson[index].amount}</td>
+                        </tr>`;
+                        sum += +listPerson[index].amount;
+                  }
+                  tfootTable.innerHTML += `<tr><td colspan="2">TỔNG</td>
+                  <td>${sum}</td>
                   </tr>`;
-                  sum += +listPerson[index].amount;
+                  
             }
-            tfootTable.innerHTML += `<tr><td colspan="2">TỔNG</td>
-            <td>${sum}</td>
-            </tr>`;
-      }
 }
 
 function inputBet() {
-      let name = prompt("Nhập vào tên người cược: ");
-      let amountMoney;
-      do {
-            amountMoney = prompt("Nhập vào số tiền cược: ");
-      } while (isNaN(amountMoney));
-      let choose = prompt("Lựa chọn cược con nào?");
-      let newPerson = {
-            name: name,
-            amount: amountMoney,
-            choose: choose
+      let btn = document.getElementById("btn");
+      let tbodyTable = document.getElementById("betting-list").children[0].children[1];
+      let tfootTable = document.getElementById("betting-list").children[0].children[2];
+      if (btn.innerText == "Xóa"){
+      listPerson = [];
+      tbodyTable.innerHTML = "";
+      tfootTable.innerHTML = "";
+      btn.innerText = "Thêm";
+      } else if (btn.innerText == "Thêm"){
+            let name = prompt("Nhập vào tên người cược: ");
+            let amountMoney;
+            do {
+                  amountMoney = prompt("Nhập vào số tiền cược: ");
+            } while (isNaN(amountMoney));
+            let choose = prompt("Lựa chọn cược con nào?");
+            let newPerson = {
+                  name: name,
+                  amount: amountMoney,
+                  choose: choose
+            }
+            listPerson[listPerson.length] = newPerson;
+            writeBet();
       }
-      listPerson[listPerson.length] = newPerson;
-      writeBet()
 }
